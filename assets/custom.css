@@ -1,0 +1,36 @@
+:root {
+  --r-main-font-size: 24px;
+}
+
+code {
+  background-color: rgba(110, 118, 129, 0.4);
+}
+
+.reveal h2 {
+  text-transform: none;
+}
+
+.reveal h3 {
+  text-transform: none;
+}
+
+.reference {
+  text-align: right;
+  font-size: 14px;
+}
+
+.red-text {
+  color: red;
+}
+
+.green-text {
+  color: green;
+}
+
+.footnotes ol li {
+  font-size: 12px;
+}
+
+.footnotes ol li p {
+  margin: 0;
+}
