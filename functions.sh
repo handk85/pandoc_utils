@@ -1,7 +1,7 @@
 
 BASE_DIR="$HOME/.pandoc_utils"
 
-function generate_slide(){
+function compile_slide(){
   # Run the script with markdown input
   # For example:
   # $ ./generate_slide.sh lab4.md
@@ -52,7 +52,7 @@ function generate_dist(){
   done
 }
 
-function compile_md(){
+function md_to_html(){
   outname=${1%.*}
   pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html
 }
