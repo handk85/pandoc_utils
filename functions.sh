@@ -37,7 +37,7 @@ function monitor_slide(){
     do 
       filename=$(basename "$file")
       outname="build/${filename%.*}"
-      generate_slide $filename
+      compile_slide $filename
       echo "$(date "+%H:%M:%S") $outname.html has been updated"
     done
 }
@@ -53,6 +53,11 @@ function generate_dist(){
 }
 
 function md_to_html(){
-  outname=${1%.*}
+  if [ ! -d "build" ]; then
+    echo "Create build directory"
+    mkdir build
+  fi
+
+  outname="build/${1%.*}"
   pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html
 }
