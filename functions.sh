@@ -1,26 +1,29 @@
 
 BASE_DIR="$HOME/.pandoc_utils"
 
+function init_build_structure(){
+  if [ ! -d "build" ]; then
+    echo "Create build directory"
+    mkdir build
+  fi
+  if [ ! -L "build/assets" ]; then
+    echo "create a symbolic link: build/assets";
+    ln -s "$BASE_DIR"/assets build/assets
+  fi
+}
+
 function compile_slide(){
   # Run the script with markdown input
   # For example:
   # $ ./generate_slide.sh lab4.md
 
-  if [ ! -d "build" ]; then
-    echo "Create build directory"
-    mkdir build
-  fi
+  init_build_structure
 
   outname="build/${1%.*}"
   pandoc -s -t revealjs $1 -V theme=white -V slideNumber="'c/t'" \
     --metadata pagetitle="$outname slides" -o "$outname".html \
     --css="$BASE_DIR"/assets/custom.css --reference-location=section \
     --include-in-header="$BASE_DIR"/assets/additional_head.html
-
-  if [ ! -L "build/assets" ]; then
-    echo "create a symbolic link: build/assets";
-    ln -s "$BASE_DIR"/assets build/assets
-  fi
 
   if [ ! -L "build/imgs" ]; then
     echo "create a symbolic link: build/imgs";
@@ -53,11 +56,9 @@ function generate_dist(){
 }
 
 function md_to_html(){
-  if [ ! -d "build" ]; then
-    echo "Create build directory"
-    mkdir build
-  fi
+  init_build_structure
 
   outname="build/${1%.*}"
-  pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html
+  pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html \
+    --include-in-header="$BASE_DIR"/assets/additional_head.html
 }
