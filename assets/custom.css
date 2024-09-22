@@ -27,6 +27,15 @@ code {
   color: green;
 }
 
+.footnotes {
+  text-align: right;
+}
+
+.footnotes hr {
+  display: none;
+  border: none;
+}
+
 .footnotes ol li {
   font-size: 12px;
 }

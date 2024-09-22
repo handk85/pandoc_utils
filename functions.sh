@@ -12,7 +12,7 @@ function init_build_structure(){
   fi
   if [ -d "imgs" ] && [ ! -L "build/imgs" ]; then
       echo "Create a symbolic link: build/imgs";
-      ln -s imgs build/imgs
+      ln -s ../imgs build/imgs
   fi
 }
 
