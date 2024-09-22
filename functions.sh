@@ -7,8 +7,12 @@ function init_build_structure(){
     mkdir build
   fi
   if [ ! -L "build/assets" ]; then
-    echo "create a symbolic link: build/assets";
+    echo "Create a symbolic link: build/assets";
     ln -s "$BASE_DIR"/assets build/assets
+  fi
+  if [ -d "imgs" ] && [ ! -L "build/imgs" ]; then
+      echo "Create a symbolic link: build/imgs";
+      ln -s imgs build/imgs
   fi
 }
 
@@ -32,10 +36,6 @@ function compile_slide(){
 }
 
 function monitor_slide(){
-  # The script detects changes in the markdown file and automatically re-generate html slides
-  mkdir -p build
-  cp -r imgs build/imgs
-
   fswatch *.md| while read -r file; 
     do 
       filename=$(basename "$file")
@@ -61,4 +61,14 @@ function md_to_html(){
   outname="build/${1%.*}"
   pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html \
     --include-in-header="$BASE_DIR"/assets/additional_head.html
+}
+
+function monitor_md(){
+  fswatch *.md | while read -r file;
+    do
+      filename=$(basename "$file")
+      outname="build/${filename%.*}"
+      md_to_html $filename
+      echo "$(date "+%H:%M:%S") $outname.html has been updated"
+    done
 }
