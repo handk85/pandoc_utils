@@ -27,7 +27,9 @@ function compile_slide(){
   pandoc -s -t revealjs $1 -V theme=white -V slideNumber="'c/t'" \
     --metadata pagetitle="$outname slides" -o "$outname".html \
     --css="$BASE_DIR"/assets/custom.css --reference-location=section \
-    --include-in-header="$BASE_DIR"/assets/additional_head.html
+    --include-in-header="$BASE_DIR"/assets/additional_head.html\
+    --embed-resources \
+    -V revealjs-url="$BASE_DIR/assets/js/reveal.js" \
 
   if [ ! -L "build/imgs" ]; then
     echo "create a symbolic link: build/imgs";
