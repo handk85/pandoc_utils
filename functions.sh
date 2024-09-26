@@ -6,9 +6,9 @@ function init_build_structure(){
     echo "Create build directory"
     mkdir build
   fi
-  if [ ! -L "build/assets" ]; then
-    echo "Create a symbolic link: build/assets";
-    ln -s "$BASE_DIR"/assets build/assets
+  if [ ! -L "assets" ]; then
+    echo "Create a symbolic link: assets";
+    ln -s "$BASE_DIR"/assets
   fi
   if [ -d "imgs" ] && [ ! -L "build/imgs" ]; then
       echo "Create a symbolic link: build/imgs";
