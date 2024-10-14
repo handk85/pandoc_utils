@@ -25,7 +25,7 @@ function compile_slide(){
 
   outname="build/${1%.*}"
   pandoc -s -t revealjs $1 -V theme=white -V slideNumber="'c/t'" \
-    --metadata pagetitle="$outname slides" -o "$outname".html \
+    --metadata pagetitle="${1%.*} slides" -o "$outname".html \
     --css="$BASE_DIR"/assets/custom.css --reference-location=section \
     --include-in-header="$BASE_DIR"/assets/additional_head.html\
     --embed-resources \
@@ -57,12 +57,13 @@ function generate_dist(){
   done
 }
 
-function md_to_html(){
+function compile_md(){
   init_build_structure
 
   outname="build/${1%.*}"
   pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html \
-    --include-in-header="$BASE_DIR"/assets/additional_head.html
+    --metadata pagetitle="${1%.*}" \
+    --include-in-header="$BASE_DIR"/assets/additional_head.html --mathjax
 }
 
 function monitor_md(){
@@ -70,7 +71,7 @@ function monitor_md(){
     do
       filename=$(basename "$file")
       outname="build/${filename%.*}"
-      md_to_html $filename
+      compile_md $filename
       echo "$(date "+%H:%M:%S") $outname.html has been updated"
     done
 }
