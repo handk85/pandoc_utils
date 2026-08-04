@@ -29,6 +29,7 @@ function compile_slide(){
     --css="$BASE_DIR"/assets/custom.css --reference-location=section \
     --include-in-header="$BASE_DIR"/assets/additional_head.html\
     --embed-resources \
+    --standalone \
     -V revealjs-url="$BASE_DIR/assets/js/reveal.js" \
 
   if [ ! -L "build/imgs" ]; then
@@ -45,16 +46,6 @@ function monitor_slide(){
       compile_slide $filename
       echo "$(date "+%H:%M:%S") $outname.html has been updated"
     done
-}
-
-function generate_dist(){
-  mkdir -p dist
-
-  for file in build/*.html; 
-  do
-    echo "$file"
-    inliner --nosvg --skip-absolute-urls "$file" > "dist/$(basename "$file")" 
-  done
 }
 
 function compile_md(){
