@@ -55,7 +55,7 @@ function compile_md(){
   pandoc -s --embed-resource -c "$BASE_DIR"/assets/github-markdown.css -f gfm -t html ${1} -o "$outname".html \
     --metadata pagetitle="${1%.*}" \
     --standalone \
-    --include-in-header="$BASE_DIR"/assets/additional_head.html --mathjax
+    --include-in-header="$BASE_DIR"/assets/additional_head.html --math-method=mathjax
 }
 
 function monitor_md(){
